@@ -19,7 +19,7 @@ SITE_TITLE = 'ISS Locator'
 github_link= 'https://github.com/antonio-sc66/locate-iss'
 
 
-app = dash.Dash()
+app = dash.Dash(__name__)
 server = app.server
 app.title = SITE_TITLE
 
