@@ -24,28 +24,29 @@ app.title = SITE_TITLE
 @app.callback(Output('live-update-graph', 'figure'),
               Input('interval-component', 'n_intervals'))
 def get_figure(n):
-
     pos_df = pd.read_json(POS_URL)
     pos_df = pd.DataFrame(np.array([[pos_df['iss_position']['latitude'], pos_df['iss_position']['longitude']]]), columns=['lat', 'lon'])
     fig = px.scatter_geo(pos_df, lat=pos_df['lat'], lon=pos_df['lon'], projection='natural earth')
     fig.update_layout(title = 'International Space Station realtime location',
                         geo = dict(showcountries = True,
                                    showland = True,
-                                   showlakes = True,
                                    showocean=True,
                                    landcolor="LightGreen",
                                    oceancolor="LightBlue",
-                                   lakecolor="Blue"),
+                                   lakecolor="LightGreen",
+                                   ),
                         width = FIG_WIDTH, height = FIG_HEIGHT,
+                        dragmode=False
                       )
-    fig.update_traces(marker=dict(size=15))
+    fig.update_traces(marker=dict(size=15, symbol="x", line=dict(width=2, color='DarkSlateGrey')),
+                      mode="markers+text+lines", opacity=1)
     #fig.show()
     return fig
 
 
 if __name__ == "__main__":
     app.layout = html.Div([
-        dcc.Graph(id='live-update-graph'),
+        dcc.Graph(id='live-update-graph', config={'displaylogo': False, 'scrollZoom': False, 'autosizable': True, 'fillFrame':True, 'displayModeBar': True}),
         dcc.Interval(
             id='interval-component',
             interval=INTER_SEC * 1000,  # in milliseconds
