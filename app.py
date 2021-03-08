@@ -20,6 +20,7 @@ github_link= 'https://github.com/antonio-sc66/locate-iss'
 
 
 app = dash.Dash()
+server = app.server
 app.title = SITE_TITLE
 
 @app.callback(Output('live-update-graph', 'figure'),
