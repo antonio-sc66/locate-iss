@@ -61,7 +61,7 @@ def get_figure(n):
 
 
 if __name__ == "__main__":
-    time.sleep(2)
+    time.sleep(0.5) # Heroku was failing without the sleep
     if not HEROKU_DEPLOY:
         app.run_server(debug=False, use_reloader=True, port=PORT, threaded=True, host=HOST)
     else:
