@@ -23,6 +23,20 @@ app = dash.Dash(__name__)
 server = app.server
 app.title = SITE_TITLE
 
+app.layout = html.Div([
+    html.A('Code on Github', href=github_link),
+    dcc.Graph(id='live-update-graph',
+              config={'displaylogo': False, 'scrollZoom': False, 'autosizable': True, 'fillFrame': True,
+                      'displayModeBar': True}),
+    dcc.Interval(
+        id='interval-component',
+        interval=INTER_SEC * 1000,  # in milliseconds
+        n_intervals=0
+    )
+], style={"height": "100%", "width": "100%", "textAlign": "center", "display": "flex",
+          "margin-left": "auto", "margin-right": "auto", "justify-content": "center",
+          "align-items": "center"})
+
 @app.callback(Output('live-update-graph', 'figure'),
               Input('interval-component', 'n_intervals'))
 def get_figure(n):
@@ -47,19 +61,7 @@ def get_figure(n):
 
 
 if __name__ == "__main__":
-    app.layout = html.Div([
-        html.A('Code on Github', href=github_link),
-        dcc.Graph(id='live-update-graph', config={'displaylogo': False, 'scrollZoom': False, 'autosizable': True, 'fillFrame':True, 'displayModeBar': True}),
-        dcc.Interval(
-            id='interval-component',
-            interval=INTER_SEC * 1000,  # in milliseconds
-            n_intervals=0
-        )
-    ], style={"height" : "100%", "width" : "100%", "textAlign" : "center", "display" : "flex",
-              "margin-left" : "auto", "margin-right" : "auto", "justify-content" : "center",
-              "align-items" : "center"})
-
-    server = app.server
+    time.sleep(2)
     if not HEROKU_DEPLOY:
         app.run_server(debug=False, use_reloader=True, port=PORT, threaded=True, host=HOST)
     else:
