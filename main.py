@@ -33,7 +33,7 @@ def get_figure(n):
                                    showocean=True,
                                    landcolor="LightGreen",
                                    oceancolor="LightBlue",
-                                   lakecolor="LightGreen",
+                                   lakecolor="LightGreen"
                                    ),
                         width = FIG_WIDTH, height = FIG_HEIGHT,
                         dragmode=False
