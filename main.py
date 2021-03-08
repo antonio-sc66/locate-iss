@@ -10,12 +10,14 @@ from plotly.validators.scatter.marker import SymbolValidator
 import plotly.graph_objects as go
 
 POS_URL = 'http://api.open-notify.org/iss-now.json'
+HEROKU_DEPLOY = True
 PORT = 80
 HOST = '0.0.0.0' # 0.0.0.0 to publish on local network, 127.0.0.1 to publish on localhost
 INTER_SEC = 5  # Refresh interval in seconds
 FIG_WIDTH = 1280 # pixels
 FIG_HEIGHT = 720 # pixels
 SITE_TITLE = 'ISS Locator'
+github_link= 'https://github.com/antonio-sc66/locate-iss'
 
 
 app = dash.Dash()
@@ -46,6 +48,7 @@ def get_figure(n):
 
 if __name__ == "__main__":
     app.layout = html.Div([
+        html.A('Code on Github', href=github_link),
         dcc.Graph(id='live-update-graph', config={'displaylogo': False, 'scrollZoom': False, 'autosizable': True, 'fillFrame':True, 'displayModeBar': True}),
         dcc.Interval(
             id='interval-component',
@@ -57,4 +60,7 @@ if __name__ == "__main__":
               "align-items" : "center"})
 
     server = app.server
-    app.run_server(debug=False, use_reloader=True, port=PORT, threaded=True, host=HOST)
+    if not HEROKU_DEPLOY:
+        app.run_server(debug=False, use_reloader=True, port=PORT, threaded=True, host=HOST)
+    else:
+        app.run_server()
