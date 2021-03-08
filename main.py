@@ -6,8 +6,7 @@ import plotly.express as px
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output
-from plotly.validators.scatter.marker import SymbolValidator
-import plotly.graph_objects as go
+
 
 POS_URL = 'http://api.open-notify.org/iss-now.json'
 HEROKU_DEPLOY = True
